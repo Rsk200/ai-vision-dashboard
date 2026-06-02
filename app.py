@@ -11,17 +11,22 @@ CORS(app)
 
 # Load environment variables
 load_dotenv()
-openai_endpoint = os.getenv("ENDPOINT")
-model_deployment = os.getenv("MODEL_DEPLOYMENT")
-github_token = os.getenv("GITHUB_TOKEN")
-
-# Initialize OpenAI client for GitHub Models
-client = OpenAI(
-    base_url=openai_endpoint,
-    api_key=github_token
-)
 
 system_message = "You are an AI assistant in a grocery store that sells fruit. You provide detailed answers to questions about produce."
+
+def get_client():
+    openai_endpoint = os.getenv("ENDPOINT")
+    model_deployment = os.getenv("MODEL_DEPLOYMENT")
+    github_token = os.getenv("GITHUB_TOKEN")
+    
+    if not github_token:
+        raise ValueError("GitHub Token is not set in the environment variables.")
+        
+    return OpenAI(
+        base_url=openai_endpoint,
+        api_key=github_token
+    ), model_deployment
+
 
 @app.route('/')
 def index():
@@ -52,6 +57,8 @@ def chat():
                 "type": "image_url",
                 "image_url": {"url": image_base64}
             })
+
+        client, model_deployment = get_client()
 
         response = client.chat.completions.create(
             model=model_deployment,
