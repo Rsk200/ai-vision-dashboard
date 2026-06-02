@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Vision Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="header">
+            <h1>AI Vision Assistant</h1>
+            <p>Upload an image and ask a question</p>
+        </header>
+
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-area" id="upload-area">
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                    <div class="upload-prompt" id="upload-prompt">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                        </svg>
+                        <p>Drag & Drop an image or <span class="browse-btn">Browse</span></p>
+                    </div>
+                    <img id="image-preview" class="image-preview" hidden>
+                    <button class="remove-btn" id="remove-btn" hidden>&times;</button>
+                </div>
+            </div>
+
+            <div class="chat-section">
+                <div class="chat-box" id="chat-box">
+                    <div class="message system-msg">
+                        <div class="msg-content">Hello! I am your AI fruit assistant. Upload an image and ask me what it is!</div>
+                    </div>
+                </div>
+                
+                <div class="input-area">
+                    <input type="text" id="question-input" placeholder="Ask a question about the image..." autocomplete="off">
+                    <button id="send-btn" class="send-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
